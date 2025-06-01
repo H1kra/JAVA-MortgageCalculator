@@ -3,8 +3,8 @@ package com.example.mortgageCalc.servis;
 import com.example.mortgageCalc.model.Calculator;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Service
 public class CalculationService {
@@ -34,10 +34,14 @@ public class CalculationService {
 
         return totalPaid - calculator.getLoanAmount();
     };
-    public List<Double> allCalculations(Calculator calculator) {
-        double regularPayment = regularPayment(calculator);
-        double totalPaid = totalPaid(calculator);
-        double paidInInterest = paidInInterest(calculator);
-        return Arrays.asList(regularPayment, totalPaid, paidInInterest);
-    };
+    public Map<String, Double> allCalculations(Calculator calculator) {
+        Map<String, Double> results = new LinkedHashMap<>();
+
+        results.put("Regular Payment", regularPayment(calculator));
+        results.put("Total Paid", totalPaid(calculator));
+        results.put("Paid in Interest", paidInInterest(calculator));
+
+        return results;
+    }
+
 }

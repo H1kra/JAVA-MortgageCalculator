@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/calculators")
@@ -19,7 +20,7 @@ public class CalculatorController {
 
 private CalculationService calculationService;
     @PostMapping("/calculate")
-    public ResponseEntity<List<Double>> calculation(@RequestBody Calculator calculator) {
+    public ResponseEntity<Map<String, Double>> calculation(@RequestBody Calculator calculator) {
         System.out.println(calculator);
         return ResponseEntity.ok(calculationService.allCalculations(calculator));
     }
