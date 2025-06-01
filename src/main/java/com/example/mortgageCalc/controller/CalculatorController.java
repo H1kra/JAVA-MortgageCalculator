@@ -1,15 +1,14 @@
 package com.example.mortgageCalc.controller;
 
 import com.example.mortgageCalc.model.Calculator;
+import com.example.mortgageCalc.model.TableRequest;
 import com.example.mortgageCalc.servis.CalculationService;
 import lombok.AllArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -25,10 +24,10 @@ private CalculationService calculationService;
         return ResponseEntity.ok(calculationService.allCalculations(calculator));
     }
 
-//    @PostMapping("/paymentCalendar")
-//    public ResponseEntity<?> paymentCalendar(@RequestBody Calculator calculator) {
-//        System.out.println(calculator);
-//        return ResponseEntity.ok(calculationservice.payment(calculator));
-//    }
+    @PostMapping("/paymentCalendar")
+    public ResponseEntity<?> paymentCalendar(@RequestBody TableRequest request) throws IOException {
+       System.out.println(request.getCalculator());
+        return ResponseEntity.ok(calculationService.generateCSV(request.getCalculator(), request.getPath()));
+   }
 
 }
