@@ -38,20 +38,32 @@ public class CalculationService {
         double totalPaid = details.regularPayment * details.n;
         return  Math.round(totalPaid * 100.0) / 100.0;
 
-    };
+    }
+
     public static double paidInInterest(Calculator calculator) {
         LoanDetails details = new LoanDetails(calculator);
         double totalPaid = details.regularPayment * details.n;
         double paidInterest = totalPaid - calculator.getLoanAmount();
         return  Math.round(paidInterest * 100.0) / 100.0;
 
-    };
+    }
+
+    public static double rpsn(Calculator calculator) {
+        double nominalRate = calculator.getInterestRate() / 100.0; // e.g., 7% => 0.07
+        int frequency = calculator.getPaymentInterval().getFrequency(); // e.g., 12 for monthly
+
+        double rpsn = Math.pow(1 + (nominalRate / frequency), frequency) - 1;
+
+        return Math.round(rpsn * 10000.0) / 100.0;
+    }
+
     public Map<String, Double> allCalculations(Calculator calculator) {
         Map<String, Double> results = new LinkedHashMap<>();
 
         results.put("Regular Payment", regularPayment(calculator));
         results.put("Total Paid", totalPaid(calculator));
         results.put("Paid in Interest", paidInInterest(calculator));
+        results.put("RPSN", rpsn(calculator));
 
         return results;
     }
