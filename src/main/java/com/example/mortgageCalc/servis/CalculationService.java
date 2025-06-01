@@ -40,16 +40,12 @@ public class CalculationService {
     }
 
     public static double rpsn(Calculator calculator) {
-        double i = (calculator.getInterestRate() / 100) / calculator.getPaymentInterval().getFrequency();
-        double n = calculator.getRepaymentPeriod() * calculator.getPaymentInterval().getFrequency();
-        double regularPayment = calculator.getLoanAmount() * (i / (1 - Math.pow(i + 1, -n)));
-        double totalPaid = regularPayment * n;
+        double nominalRate = calculator.getInterestRate() / 100.0; // e.g., 7% => 0.07
+        int frequency = calculator.getPaymentInterval().getFrequency(); // e.g., 12 for monthly
 
-        double cost = totalPaid - calculator.getLoanAmount();
-        double years = calculator.getRepaymentPeriod();
+        double rpsn = Math.pow(1 + (nominalRate / frequency), frequency) - 1;
 
-        double rpsn = (cost / calculator.getLoanAmount()) / years * 100;
-        return Math.round(rpsn * 100.0) / 100.0; // zaokrouhlení na 2 desetinná místa
+        return Math.round(rpsn * 10000.0) / 100.0;
     }
 
     public Map<String, Double> allCalculations(Calculator calculator) {
