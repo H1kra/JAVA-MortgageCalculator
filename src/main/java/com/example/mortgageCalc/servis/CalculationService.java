@@ -1,6 +1,5 @@
 package com.example.mortgageCalc.servis;
 
-import com.example.mortgageCalc.enums.Intervals;
 import com.example.mortgageCalc.model.Calculator;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class calculationService {
+public class CalculationService {
 
     public static double regularPayment(Calculator calculator) {
 
